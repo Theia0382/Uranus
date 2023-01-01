@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33205.214
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Uranus", "Uranus.csproj", "{15E40446-5064-4399-BC83-B4105C551FB9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{15E40446-5064-4399-BC83-B4105C551FB9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{15E40446-5064-4399-BC83-B4105C551FB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{15E40446-5064-4399-BC83-B4105C551FB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{15E40446-5064-4399-BC83-B4105C551FB9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8E621C4F-057E-465B-9157-3FB6B921FB36}
+	EndGlobalSection
+EndGlobal
