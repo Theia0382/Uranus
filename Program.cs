@@ -5,11 +5,16 @@ namespace Uranus
 {
 	class Program
 	{
-		public static Task Main( string[ ] args ) => new Program( ).MainAsync( );
-
-		public async Task MainAsync( )
+		public static async Task Main( string[ ] args )
 		{
-			Client client = new( Environment.GetEnvironmentVariable( "Token" ) );
+			string? token = GetArgument( args, "token" );
+			await new Program( ).MainAsync( token );
+		}
+
+		public async Task MainAsync( string? Token = null )
+		{
+			string token = Token ?? Environment.GetEnvironmentVariable( "Token" );
+			Client client = new( token );
 			client.Ready += new Events.Ready( ).On;
 			client.InteractionCreate += new Events.InteractionCreate( ).On;
 
@@ -20,6 +25,20 @@ namespace Uranus
 		{
 			new Commands.Ping( )
 		};
+
+		private static string? GetArgument( string[ ] args, string name )
+		{
+			List<string> arguments = args.ToList( );
+			int index = arguments.IndexOf( "--" + name );
+			if ( index != -1 && index + 1 < arguments.Count )
+			{
+				if ( !arguments[ index + 1 ].StartsWith( "--" ) )
+				{
+					return arguments[ index + 1 ];
+				}
+			}
+			return null;
+		}
 	}
 
 	public interface ICommand

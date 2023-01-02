@@ -19,6 +19,36 @@
 		public SlashCommandBuilder SetDefaultMemberPermissions( string defaultMemberPermissions ) { DefaultMemberPermissions = defaultMemberPermissions; return this; }
 		public SlashCommandBuilder SetDMPermission( bool? dmPermission ) { DMPermission = dmPermission; return this; }
 
+		public SlashCommandBuilder AddNameLocalizations( Dictionary<string, string> nameLocalizations )
+		{
+			NameLocalizations ??= new Dictionary<string, string>( );
+			foreach ( KeyValuePair<string, string> items in nameLocalizations )
+			{
+				NameLocalizations.Add( items.Key, items.Value );
+			}
+			return this;
+		}
+		public SlashCommandBuilder AddNameLocalization( string locale, string name )
+		{
+			NameLocalizations ??= new Dictionary<string, string>( );
+			NameLocalizations.Add( locale, name );
+			return this;
+		}
+		public SlashCommandBuilder AddDescriptionLocalizations( Dictionary<string, string> descriptionLocalizations )
+		{
+			DescriptionLocalizations ??= new Dictionary<string, string>( );
+			foreach ( KeyValuePair<string, string> items in descriptionLocalizations )
+			{
+				DescriptionLocalizations.Add( items.Key, items.Value );
+			}
+			return this;
+		}
+		public SlashCommandBuilder AddDescriptionLocalization( string locale, string description )
+		{
+			DescriptionLocalizations ??= new Dictionary<string, string>( );
+			DescriptionLocalizations.Add( locale, description );
+			return this;
+		}
 		public SlashCommandBuilder AddOptions( List<SlashCommandOptionBuilder> options )
 		{
 			Options ??= new List<SlashCommandOptionBuilder>( );

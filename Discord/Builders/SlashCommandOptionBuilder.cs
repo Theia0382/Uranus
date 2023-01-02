@@ -31,10 +31,34 @@
 		public SlashCommandOptionBuilder SetMaxLength( ushort maxLength ) { MaxLength = maxLength; return this; }
 		public SlashCommandOptionBuilder SetAutocomplete( bool autocomplete ) { Autocomplete = autocomplete; return this; }
 
-		public SlashCommandOptionBuilder AddOptions( List<SlashCommandOptionBuilder> options )
+		public SlashCommandOptionBuilder AddNameLocalizations( Dictionary<string, string> nameLocalizations )
 		{
-			Options ??= new List<SlashCommandOptionBuilder>( );
-			Options.AddRange( options );
+			NameLocalizations ??= new Dictionary<string, string>( );
+			foreach ( KeyValuePair<string, string> items in nameLocalizations )
+			{
+				NameLocalizations.Add( items.Key, items.Value );
+			}
+			return this;
+		}
+		public SlashCommandOptionBuilder AddNameLocalization( string locale, string name )
+		{
+			NameLocalizations ??= new Dictionary<string, string>( );
+			NameLocalizations.Add( locale, name );
+			return this;
+		}
+		public SlashCommandOptionBuilder AddDescriptionLocalizations( Dictionary<string, string> descriptionLocalizations )
+		{
+			DescriptionLocalizations ??= new Dictionary<string, string>( );
+			foreach ( KeyValuePair<string, string> items in descriptionLocalizations )
+			{
+				DescriptionLocalizations.Add( items.Key, items.Value );
+			}
+			return this;
+		}
+		public SlashCommandOptionBuilder AddDescriptionLocalization( string locale, string description )
+		{
+			DescriptionLocalizations ??= new Dictionary<string, string>( );
+			DescriptionLocalizations.Add( locale, description );
 			return this;
 		}
 		public SlashCommandOptionBuilder AddChoices( List<SlashCommandOptionChoiceBuilder> choices )
@@ -49,7 +73,12 @@
 			Choices.Add( choice );
 			return this;
 		}
-
+		public SlashCommandOptionBuilder AddOptions( List<SlashCommandOptionBuilder> options )
+		{
+			Options ??= new List<SlashCommandOptionBuilder>( );
+			Options.AddRange( options );
+			return this;
+		}
 		public SlashCommandOptionBuilder AddSubCommand( SlashCommandOptionBuilder subCommand )
 		{
 			Options ??= new List<SlashCommandOptionBuilder>( );
@@ -118,6 +147,18 @@
 			Options ??= new List<SlashCommandOptionBuilder>( );
 			attachmentOption.Type = ApplicationCommandOptionType.Attachment;
 			Options.Add( attachmentOption );
+			return this;
+		}
+		public SlashCommandOptionBuilder AddChannelTypes( List<ChannelType> channelTypes )
+		{
+			ChannelTypes ??= new List<ChannelType>( );
+			ChannelTypes.AddRange( channelTypes );
+			return this;
+		}
+		public SlashCommandOptionBuilder AddChannelType( ChannelType channelType )
+		{
+			ChannelTypes ??= new List<ChannelType>( );
+			ChannelTypes.Add( channelType );
 			return this;
 		}
 

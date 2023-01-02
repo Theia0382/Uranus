@@ -6,7 +6,7 @@ namespace Uranus.Discord
 	{
 		public CommandData CommandData { get; init; }
 
-		public async Task ReplyAsync( string? content )
+		public async Task ReplyAsync( string content )
 		{
 			string path = $"/interactions/{ID}/{Token}/callback";
 			string str = $@"
@@ -34,7 +34,7 @@ namespace Uranus.Discord
 			await Client.HttpPostAsync( path, data );
 		}
 
-		public async Task EditReplyAsync( string? content )
+		public async Task EditReplyAsync( string content )
 		{
 			string path = $"/webhooks/{ApplicationID}/{Token}/messages/@original";
 			string str = $@"

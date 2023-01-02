@@ -19,10 +19,7 @@ namespace Uranus.Discord
 
 		public Client( string token )
 		{
-			if ( token == null )
-			{
-				throw new ArgumentNullException( "token" );
-			}
+			ArgumentNullException.ThrowIfNull( token );
 
 			Token = token;
 			httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bot", Token );
