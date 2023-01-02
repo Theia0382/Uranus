@@ -18,7 +18,7 @@ namespace Uranus.Discord
 		public string? locale { get; set; }
 		public string? guild_locale { get; set; }
 
-		public BaseInteraction Solve( Client client )
+		public BaseInteraction Resolve( Client client )
 		{
 			if ( type == InteractionType.ApplicationCommand )
 			{
@@ -30,11 +30,11 @@ namespace Uranus.Discord
 					ID = id,
 					ApplicationID = application_id,
 					Type = type,
-					CommandData = Data.Solve( ),
+					CommandData = Data.Resolve( ),
 					GuildID = guild_id,
 					ChannelID = channel_id,
-					Member = member?.Solve( client ),
-					User = user?.Solve( client ),
+					Member = member?.Resolve( client ),
+					User = user?.Resolve( client ),
 					Token = token,
 					Version = version,
 					AppPermissions = app_permissions,
@@ -53,8 +53,8 @@ namespace Uranus.Discord
 					Type = type,
 					GuildID = guild_id,
 					ChannelID = channel_id,
-					Member = member?.Solve( client ),
-					User = user?.Solve( client ),
+					Member = member?.Resolve( client ),
+					User = user?.Resolve( client ),
 					Token = token,
 					Version = version,
 					AppPermissions = app_permissions,

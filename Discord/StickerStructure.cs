@@ -15,7 +15,7 @@
 		public UserStructure? user { get; set; }
 		public ushort? sort_value { get; set; }
 
-		public Sticker Solve( Client client )
+		public Sticker Resolve( Client client )
 		{
 			Sticker sticker = new( )
 			{
@@ -29,7 +29,7 @@
 				FormatType = format_type,
 				Available = available,
 				GuildID = guild_id,
-				User = user?.Solve( client ),
+				User = user?.Resolve( client ),
 				SortValue = sort_value
 			};
 

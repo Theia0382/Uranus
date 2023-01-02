@@ -14,12 +14,12 @@
 		public string? permissions { get; set; }
 		public DateTimeOffset? communication_disabled_until { get; set; }
 
-		public GuildMember Solve( Client client )
+		public GuildMember Resolve( Client client )
 		{
 			GuildMember member = new( )
 			{
 				Client = client,
-				User = user?.Solve( client ),
+				User = user?.Resolve( client ),
 				Nick = nick,
 				Avatar = avatar,
 				Roles = roles.ToList( ),

@@ -16,7 +16,7 @@
 		public PremiumType? premium_type { get; set; }
 		public uint? public_flags { get; set; }
 
-		public User Solve( Client client )
+		public User Resolve( Client client )
 		{
 			User user = new( )
 			{

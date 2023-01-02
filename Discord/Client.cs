@@ -1,5 +1,4 @@
-﻿using System.Buffers;
-using System.Net.Http.Headers;
+﻿using System.Net.Http.Headers;
 using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
@@ -18,16 +17,21 @@ namespace Uranus.Discord
 		private const string HttpBaseUri = "https://discord.com/api/v10";
 		private uint? s;
 
-		public Client( string Token )
+		public Client( string token )
 		{
-			this.Token = Token;
+			if ( token == null )
+			{
+				throw new ArgumentNullException( "token" );
+			}
+
+			Token = token;
 			httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue( "Bot", Token );
 			WebSocketData += OnWebSocketData;
 			Hello += OnHello;
 			Heartbeat += OnHeartbeat;
 		}
 
-		public async Task Login( )
+		public async Task LoginAsync( )
 		{
 			Uri uri = new( WebSocketUri );
 
@@ -37,53 +41,75 @@ namespace Uranus.Discord
 
 			while ( wsClient.State == WebSocketState.Open )
 			{
-				using IMemoryOwner<byte> buffer = MemoryPool<byte>.Shared.Rent( 1024 * 4 );
-				ValueWebSocketReceiveResult request = await wsClient.ReceiveAsync( buffer.Memory, CancellationToken.None );
-				string json = Encoding.UTF8.GetString( buffer.Memory.Span );
-				JsonDocument data = JsonDocument.Parse( buffer.Memory[ ..request.Count ] );
+				ArraySegment<byte> buffer = new byte[ 1024 * 4 ];
+				WebSocketReceiveResult request = wsClient.ReceiveAsync( buffer, CancellationToken.None ).Result;
+				JsonDocument data = JsonDocument.Parse( buffer[ ..request.Count ] );
 
 				WebSocketData( data );
 			}
 		}
 
-		public async Task<User> GetUserAsync( string user_id )
+		public async Task<User?> GetUserAsync( string user_id )
 		{
 			string path = $"/users/{user_id}";
 
 			Console.WriteLine( $"Get User\nUser ID: {user_id}" );
 
 			HttpResponseMessage response = await HttpGetAsync( path );
-			string data = await response.Content.ReadAsStringAsync( );
-			User user = JsonSerializer.Deserialize<UserStructure>( data ).Solve( this );
+			if ( response.IsSuccessStatusCode )
+			{
+				string data = await response.Content.ReadAsStringAsync( );
+				User user = JsonSerializer.Deserialize<UserStructure>( data ).Resolve( this );
 
-			return user;
+				return user;
+			}
+			else
+			{
+				return null;
+			}
 		}
-		public async Task<Guild> GetGuildAsync( string guild_id )
+		public async Task<Guild?> GetGuildAsync( string guild_id )
 		{
 			string path = $"/guilds/{guild_id}";
 
 			Console.WriteLine( $"Get Guild\nGuild ID: {guild_id}" );
 
 			HttpResponseMessage response = await HttpGetAsync( path );
-			string data = await response.Content.ReadAsStringAsync( );
-			Guild guild = JsonSerializer.Deserialize<GuildStructure>( data ).Solve( this );
 
-			return guild;
+			if ( response.IsSuccessStatusCode )
+			{
+				string data = await response.Content.ReadAsStringAsync( );
+				Guild guild = JsonSerializer.Deserialize<GuildStructure>( data ).Resolve( this );
+
+				return guild;
+			}
+			else
+			{
+				return null;
+			}
 		}
-		public async Task<Channel> GetChannelAsync( string channel_id )
+		public async Task<Channel?> GetChannelAsync( string channel_id )
 		{
 			string path = $"/channels/{channel_id}";
 
 			Console.WriteLine( $"Get Channel\nChannel ID: {channel_id}" );
 
 			HttpResponseMessage response = await HttpGetAsync( path );
-			string data = await response.Content.ReadAsStringAsync( );
-			Channel channel = JsonSerializer.Deserialize<ChannelStructure>( data ).Solve( this );
 
-			return channel;
+			if ( response.IsSuccessStatusCode )
+			{
+				string data = await response.Content.ReadAsStringAsync( );
+				Channel channel = JsonSerializer.Deserialize<ChannelStructure>( data ).Resolve( this );
+
+				return channel;
+			}
+			else
+			{
+				return null;
+			}
 		}
 
-		public async Task BulkOverwriteGlobalApplicationCommands( List<SlashCommandProperties> commandList, string application_id )
+		public async Task BulkOverwriteGlobalApplicationCommandsAsync( List<SlashCommandProperties> commandList, string application_id )
 		{
 			string path = $"/applications/{application_id}/commands";
 			string str = "[";
@@ -98,7 +124,7 @@ namespace Uranus.Discord
 
 			await HttpPutAsync( path, data );
 		}
-		public async Task BulkOverwriteGuildApplicationCommands( List<SlashCommandProperties> commandList, string application_id, string guild_id )
+		public async Task BulkOverwriteGuildApplicationCommandsAsync( List<SlashCommandProperties> commandList, string application_id, string guild_id )
 		{
 			string path = $"/applications/{application_id}/guilds/{guild_id}/commands";
 			string str = "[";
@@ -187,18 +213,18 @@ namespace Uranus.Discord
 
 			if ( op == 0 )
 			{
-				string t = data.RootElement.GetProperty( "t" ).GetString( );
+				string? t = data.RootElement.GetProperty( "t" ).GetString( );
 
 				if ( t == "READY" )
 				{
-					User = JsonSerializer.Deserialize<UserStructure>( data.RootElement.GetProperty( "d" ).GetProperty( "user" ).GetRawText( ) ).Solve( this );
+					User = JsonSerializer.Deserialize<UserStructure>( data.RootElement.GetProperty( "d" ).GetProperty( "user" ).GetRawText( ) ).Resolve( this );
 
 					Ready( this );
 				}
 
 				else if ( t == "INTERACTION_CREATE" )
 				{
-					BaseInteraction interaction = JsonSerializer.Deserialize<InteractionStructure>( data.RootElement.GetProperty( "d" ) ).Solve( this );
+					BaseInteraction interaction = JsonSerializer.Deserialize<InteractionStructure>( data.RootElement.GetProperty( "d" ) ).Resolve( this );
 
 					InteractionCreate( interaction );
 				}
@@ -231,9 +257,6 @@ namespace Uranus.Discord
 
 		private async Task SendIdentify( )
 		{
-			if ( Token == null )
-				return;
-
 			string message = $@"
 			{{
 				""op"" : 2,

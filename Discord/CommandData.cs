@@ -150,7 +150,7 @@
 			{
 				if ( option.Value != null && option.Type == ApplicationCommandOptionType.Attachment )
 				{
-					value = ( option.Value as AttachmentStructure? )?.Solve( );
+					value = ( option.Value as AttachmentStructure? )?.Resolve( );
 				}
 			} );
 

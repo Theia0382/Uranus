@@ -8,7 +8,7 @@
 		public ApplicationCommandDataOptionStructure[ ]? options { get; set; }
 		public bool? focused { get; set; }
 
-		public CommandDataOption Solve( )
+		public CommandDataOption Resolve( )
 		{
 			List<CommandDataOption>? Options = null;
 			if ( options != null && options.Any( ) )
@@ -16,7 +16,7 @@
 				Options = new( );
 				options.ToList( ).ForEach( delegate ( ApplicationCommandDataOptionStructure option )
 				{
-					Options.Add( option.Solve( ) );
+					Options.Add( option.Resolve( ) );
 				} );
 			}
 

@@ -5,7 +5,7 @@
 		public string? emoji_id { get; set; }
 		public string? emoji_name { get; set; }
 
-		public DefaultReaction Solve( )
+		public DefaultReaction Resolve( )
 		{
 			DefaultReaction reaction = new( )
 			{

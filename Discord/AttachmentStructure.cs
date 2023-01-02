@@ -13,7 +13,7 @@
 		public uint? width { get; set; }
 		public bool? ephemeral { get; set; }
 
-		public Attachment Solve( )
+		public Attachment Resolve( )
 		{
 			Attachment attachment = new( )
 			{

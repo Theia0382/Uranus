@@ -9,7 +9,7 @@
 		public bool? invitable { get; set; }
 		public DateTimeOffset? create_timestamp { get; set; }
 
-		public ThreadMetadata Solve( )
+		public ThreadMetadata Resolve( )
 		{
 			ThreadMetadata metadata = new( )
 			{

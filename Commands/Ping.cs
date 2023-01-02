@@ -5,17 +5,15 @@ namespace Uranus.Commands
 {
 	public class Ping : ICommand
 	{
-		public SlashCommandBuilder Data = new SlashCommandBuilder( )
+		SlashCommandBuilder ICommand.Data => new SlashCommandBuilder( )
 			.SetName( "ping" )
 			.SetDescription( "Replies with Pong!" );
 
-		public async Task Execute( CommandInteraction interaction )
+		async Task ICommand.Execute( CommandInteraction interaction )
 		{
-			await interaction.DeferReply( );
+			await interaction.DeferReplyAsync( );
 			await Task.Delay( 3000 );
-			await interaction.EditReply( "Pong!" );
+			await interaction.EditReplyAsync( "Pong!" );
 		}
-
-		SlashCommandBuilder ICommand.Data => Data;
 	}
 }

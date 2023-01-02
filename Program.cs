@@ -5,28 +5,20 @@ namespace Uranus
 {
 	class Program
 	{
-		public static Task Main( string[ ] args ) => MainAsync( );
+		public static Task Main( string[ ] args ) => new Program( ).MainAsync( );
 
-		public static Client client = new( Environment.GetEnvironmentVariable( "Token" ) );
-
-		public static async Task MainAsync( )
+		public async Task MainAsync( )
 		{
-			Config.Set( ); // Set Token Environment
-			await SetEvents( );
-
-			await client.Login( );
-		}
-
-		private static async Task SetEvents( )
-		{
+			Client client = new( Environment.GetEnvironmentVariable( "Token" ) );
 			client.Ready += new Events.Ready( ).On;
 			client.InteractionCreate += new Events.InteractionCreate( ).On;
+
+			await client.LoginAsync( );
 		}
 
 		public static readonly List<ICommand> CommandList = new( )
 		{
-			new Commands.Ping( ),
-			new Commands.TestCommand( )
+			new Commands.Ping( )
 		};
 	}
 

@@ -11,14 +11,14 @@
 		public bool? animated { get; set; }
 		public bool? available { get; set; }
 
-		public Emoji Solve( Client client )
+		public Emoji Resolve( Client client )
 		{
 			Emoji emoji = new( )
 			{
 				ID = id,
 				Name = name,
 				Roles = roles?.ToList( ),
-				User = user?.Solve( client ),
+				User = user?.Resolve( client ),
 				RequireColons = require_colons,
 				Managed = managed,
 				Animated = animated,

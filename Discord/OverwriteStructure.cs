@@ -7,7 +7,7 @@
 		public string allow { get; set; }
 		public string deny { get; set; }
 
-		public Overwrite Solve( )
+		public Overwrite Resolve( )
 		{
 			Overwrite overwrite = new( )
 			{

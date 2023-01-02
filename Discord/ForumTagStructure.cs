@@ -8,7 +8,7 @@
 		public string emoji_id { get; set; }
 		public string? emoji_name { get; set; }
 
-		public ForumTag Solve( )
+		public ForumTag Resolve( )
 		{
 			ForumTag tag = new( )
 			{

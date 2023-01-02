@@ -1,6 +1,6 @@
 ﻿namespace Uranus.Discord
 {
-	public class GuildStructure
+	public struct GuildStructure
 	{
 		public string id { get; set; }
 		public string name { get; set; }
@@ -43,7 +43,7 @@
 		public StickerStructure[ ]? stickers { get; set; }
 		public bool premium_progress_bar_enabled { get; set; }
 
-		public Guild Solve( Client client )
+		public Guild Resolve( Client client )
 		{
 			List<Role> Roles = new( );
 			List<Emoji> Emojis = new( );
@@ -52,7 +52,7 @@
 			{
 				roles.ToList( ).ForEach( delegate ( RoleStructure role )
 				{
-					Roles.Add( role.Solve( ) );
+					Roles.Add( role.Resolve( ) );
 				} );
 			}
 			if ( emojis.Any( ) )
@@ -60,7 +60,7 @@
 				Emojis = new( );
 				emojis.ToList( ).ForEach( delegate ( EmojiStructure emoji )
 				{
-					Emojis.Add( emoji.Solve( client ) );
+					Emojis.Add( emoji.Resolve( client ) );
 				} );
 			}
 			if ( stickers != null && stickers.Any( ) )
@@ -68,7 +68,7 @@
 				Stickers = new( );
 				stickers.ToList( ).ForEach( delegate ( StickerStructure sticker )
 				{
-					Stickers.Add( sticker.Solve( client ) );
+					Stickers.Add( sticker.Resolve( client ) );
 				} );
 			}
 
@@ -112,7 +112,7 @@
 				MaxVideoChannelUsers = max_video_channel_users,
 				ApproximateMemberCount = approximate_member_count,
 				ApproximatePresenceCount = approximate_presence_count,
-				WelcomeScreen = welcome_screen?.Solve( ),
+				WelcomeScreen = welcome_screen?.Resolve( ),
 				Stickers = Stickers,
 				PremiumProgressBarEnabled = premium_progress_bar_enabled
 			};

@@ -7,7 +7,7 @@
 		public DateTimeOffset join_timestamp { get; set; }
 		public uint flags { get; set; }
 
-		public ThreadMember Solve( )
+		public ThreadMember Resolve( )
 		{
 			ThreadMember member = new( )
 			{

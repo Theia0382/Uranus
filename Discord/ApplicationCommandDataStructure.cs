@@ -9,7 +9,7 @@
 		public string? guild_id { get; set; }
 		public string? target_id { get; set; }
 
-		public CommandData Solve( )
+		public CommandData Resolve( )
 		{
 			List<CommandDataOption>? Options = null;
 			if ( options != null && options.Any( ) )
@@ -17,7 +17,7 @@
 				Options = new( );
 				options.ToList( ).ForEach( delegate ( ApplicationCommandDataOptionStructure option )
 				{
-					Options.Add( option.Solve( ) );
+					Options.Add( option.Resolve( ) );
 				} );
 			}
 

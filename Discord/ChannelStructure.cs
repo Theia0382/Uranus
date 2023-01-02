@@ -36,7 +36,7 @@
 		public SortOrderType? default_sort_order { get; set; }
 		public ForumLayoutType? default_forum_layout { get; set; }
 
-		public Channel Solve( Client client )
+		public Channel Resolve( Client client )
 		{
 			List<Overwrite>? PermissionOverwrites = null;
 			List<User>? Recipients = null;
@@ -46,7 +46,7 @@
 				PermissionOverwrites = new( );
 				permission_overwrites.ToList( ).ForEach( delegate ( OverwriteStructure overwrite )
 				{
-					PermissionOverwrites.Add( overwrite.Solve( ) );
+					PermissionOverwrites.Add( overwrite.Resolve( ) );
 				} );
 			}
 			if ( recipients != null && recipients.Any( ) )
@@ -54,7 +54,7 @@
 				Recipients = new( );
 				recipients.ToList( ).ForEach( delegate ( UserStructure recipient )
 				{
-					Recipients.Add( recipient.Solve( client ) );
+					Recipients.Add( recipient.Resolve( client ) );
 				} );
 			}
 			if ( available_tags != null && available_tags.Any( ) )
@@ -62,7 +62,7 @@
 				AvailableTags = new( );
 				available_tags.ToList( ).ForEach( delegate ( ForumTagStructure available_tag )
 				{
-					AvailableTags.Add( available_tag.Solve( ) );
+					AvailableTags.Add( available_tag.Resolve( ) );
 				} );
 			}
 
@@ -90,15 +90,15 @@
 				VideoQualityMode = video_quality_mode,
 				MessageCount = message_count,
 				MemberCount = member_count,
-				ThreadMetadata = thread_metadata?.Solve( ),
-				Member = member?.Solve( ),
+				ThreadMetadata = thread_metadata?.Resolve( ),
+				Member = member?.Resolve( ),
 				DefaultAutoArchiveDuration = default_auto_archive_duration,
 				Permissions = permissions,
 				Flags = flags,
 				TotalMessageSent = total_message_sent,
 				AvailableTags = AvailableTags,
 				AppliedTags = applied_tags?.ToList( ),
-				DefaultReactionEmoji = default_reaction_emoji?.Solve( ),
+				DefaultReactionEmoji = default_reaction_emoji?.Resolve( ),
 				DefaultThreadRateLimitPerUser = default_thread_rate_limit_per_user,
 				DefaultSortOrder = default_sort_order,
 				DefaultForumLayout = default_forum_layout

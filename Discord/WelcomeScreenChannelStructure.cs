@@ -7,7 +7,7 @@
 		public string? emoji_id { get; set; }
 		public string? emoji_name { get; set; }
 
-		public WelcomeScreenChannel Solve( )
+		public WelcomeScreenChannel Resolve( )
 		{
 			WelcomeScreenChannel channel = new( )
 			{

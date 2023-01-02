@@ -6,7 +6,7 @@
 		public string? integration_id { get; set; }
 		public object? premium_subscriber { get; set; }
 
-		public RoleTags Solve( )
+		public RoleTags Resolve( )
 		{
 			bool? PremiumSubscriber = null;
 			if ( premium_subscriber != null )

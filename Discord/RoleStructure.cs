@@ -13,7 +13,7 @@
 		public bool mentionable { get; set; }
 		public RoleTagsStructure? tags { get; set; }
 
-		public Role Solve( )
+		public Role Resolve( )
 		{
 			Role role = new( )
 			{
@@ -26,7 +26,7 @@
 				Position = position,
 				Managed = managed,
 				Mentionable = mentionable,
-				Tags = tags?.Solve( )
+				Tags = tags?.Resolve( )
 			};
 
 			return role;
